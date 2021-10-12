@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="Tenaris.AutoAr.Sylvac.App.Metter.View.MetterDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="TableValueCell" TargetType="{x:Type Label}" BasedOn="{StaticResource BaseTableItemCell}">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+        </Style>
+
+        <Style x:Key="TableItemCellBigger"  BasedOn="{StaticResource TableItemCell}" >
+            <Style.Resources>
+                <Style TargetType="{x:Type Label}"/>
+                <Style TargetType="{x:Type TextBlock}" />
+            </Style.Resources>
+            <Setter Property="Control.FontSize" Value="14"/>
+            <Setter Property="Control.Background" Value="White" />
+        </Style>
+
+        <Style x:Key="TableValueCellBigger" TargetType="{x:Type Label}" BasedOn="{StaticResource TableValueCell}">
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="White">
+        <Grid Grid.Column="1" Margin="1">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Detalle" Style="{StaticResource Header}" />
+
+                <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Style="{StaticResource TableItemCellBigger}" Height="Auto">
+                        <TextBlock Text="Maximo" TextDecorations="UnderLine" FontWeight="Bold" Foreground="#FF003366" FontSize="22"/>
+                    </Label>
+
+                    <!--<Label Grid.Column="1" Content="{Binding Path=ThresholdMax}" Style="{StaticResource TableValueCellBigger}" Margin="0,1,1,1" Height="Auto"/>-->
+                    <Label Grid.Column="1" Style="{StaticResource TableValueCellBigger}" Margin="0,1,1,1" Height="Auto">
+                        <TextBlock Text="{Binding Path=ThresholdMax, StringFormat=N4}" FontWeight="Bold" Foreground="#FF003366" FontSize="22"/>
+                    </Label>
+                </Grid>
+
+                <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Style="{StaticResource TableItemCellBigger}" Height="Auto">
+                        <TextBlock Text="Actual" TextDecorations="Underline" FontWeight="Bold" Foreground="#FF003366" FontSize="22" />
+                    </Label>
+
+                    <Label Grid.Column="1" Style="{StaticResource TableValueCellBigger}" Margin="0,1,1,1" Height="Auto">
+                        <TextBlock Text="{Binding Path=LastValue, StringFormat=N4}" FontWeight="Bold" Foreground="#FF003366" FontSize="22"/>
+                    </Label>
+                </Grid>
+
+                <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Style="{StaticResource TableItemCellBigger}" Height="Auto">
+                        <TextBlock Text="Minimo" TextDecorations="Underline" FontWeight="Bold" Foreground="#FF003366" FontSize="22" />
+                    </Label>
+
+                    <Label Grid.Column="1" Style="{StaticResource TableValueCellBigger}" Margin="0,1,1,1" Height="Auto">
+                        <TextBlock Text="{Binding Path=ThresholdMin, StringFormat=N4}" FontWeight="Bold" Foreground="#FF003366" FontSize="22"/>
+                    </Label>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

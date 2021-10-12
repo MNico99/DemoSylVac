@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Runtime.InteropServices;
+
+namespace Tenaris.AutoAr.Sylvac.Library.Metter.Model
+{
+    public static class Device
+    {
+        public static void Initialize()
+        {
+        }
+
+        public static bool Connect()
+        {
+            return true;
+        }
+
+        public static void Disconnect()
+        {
+        }
+    }
+}

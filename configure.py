@@ -1,0 +1,1 @@
+MSVS_VERSION = "10.0"

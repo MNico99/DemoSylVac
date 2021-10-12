@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Tenaris.AutoAr.Sylvac.App.Metter.View.MetterGaugeView" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:chart="clr-namespace:Steema.TeeChart.WPF;assembly=TeeChart.WPF"
+             mc:Ignorable="d"
+             d:DesignHeight="200"
+             d:DesignWidth="400">
+	<Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+        <chart:TChart Name="ChartControl" Height="Auto" Width="Auto" ClipToBounds="False"/>
+    </Grid>
+</UserControl>

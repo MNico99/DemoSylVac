@@ -1,0 +1,73 @@
+﻿<Window x:Class="Tenaris.AutoAr.Sylvac.App.Metter.MainWindow"
+        xmlns:local="clr-namespace:Tenaris.AutoAr.Sylvac.App.Metter.View"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.tenaris.ot/xaml" 
+        xmlns:images="http://schemas.tenaris.ot/xaml/images"         
+        Title="Tenaris Sylvac metter" 
+        WindowState="Maximized" 
+        mc:Ignorable="d" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"       
+        xmlns:pi="clr-namespace:Microsoft.Practices.Prism.Interactivity.InteractionRequest;assembly=Microsoft.Practices.Prism.Interactivity" 
+        xmlns:li="clr-namespace:Tenaris.Library.UI.Framework.Interactivity;assembly=Tenaris.Library.UI.Framework"         
+        xmlns:Converters="clr-namespace:Tenaris.AutoAr.Sylvac.App.Metter"
+        d:DesignHeight="640"
+        d:DesignWidth="800">
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding Path=WindowClosing}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Window.Resources>
+        <Converters:BollBackgroundGrid x:Key="BollBackgroundGrid" />
+        <Converters:BoolVisibilityLabel x:Key="BoolVisibilityLabel" />
+        <Converters:ImageListeningConverter x:Key="ImageListeningConverter" />        
+    </Window.Resources>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <local:MetterChartView Grid.Column="0" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ThresholdMin="{Binding Path=ThresholdMin}" ThresholdMax="{Binding Path=ThresholdMax}" Title="{Binding Path=Name}" SeriesSource="{Binding Path=Values}" FlawsValues="{Binding Path=Flaws}" AxialOffset="{Binding Path=AxialOffset}"  TubeLength="{Binding Path=TubeLength}" IsInInspection="{Binding Path=IsInInspection}"/>
+            <Grid Grid.Column="1"  Background="{Binding Path=IsInInspection, Converter={StaticResource BollBackgroundGrid} }" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="65"/>
+                </Grid.RowDefinitions>
+                <local:MetterDetailView Grid.Row="0"  Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <local:MetterGaugeView Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SeriesSource="{Binding Path=Values}"/>
+                <Label Grid.Row="2" Height="Auto" Visibility="{Binding Path=IsInInspection, Converter={StaticResource BoolVisibilityLabel } }" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <TextBlock Text="Inspeccionando" FontWeight="Bold" Foreground="White" FontSize="40"/>
+                </Label>
+            </Grid>
+        </Grid>
+
+        <StatusBar Grid.Row="1" Style="{StaticResource ButtonsArea}" VerticalAlignment="Bottom" BorderThickness="0,1,0,1">
+            <StatusBarItem HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Button Margin="0, 0, 3, 0" ui:Image.Source="{x:Static images:Size_22.icon_start}" Content="Start" Command="{Binding StartCommand}" />
+                    <Button Margin="0, 0, 3, 0" ui:Image.Source="{x:Static images:Size_22.icon_stop}" Content="Stop" Command="{Binding StopCommand}" />
+                    <!--<Button Margin="0, 0, 3, 0" Content="Start" Command="{Binding StartCommand}" />
+                    <Button Margin="0, 0, 3, 0" Content="Stop" Command="{Binding StopCommand}" />-->
+                </StackPanel>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding Path=IsListeningMic, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ImageListeningConverter}}" Height="Auto" Width="Auto"/>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+  <assemblyIdentity name="Tenaris.SxS.SIDTLB" processorArchitecture="x86" type="win32" version="3.0.0.0"/>
+  <file hashalg="SHA1" name="sidtlb.dll">
+    <comClass clsid="{0939538F-F34D-11D1-962F-00C0DFE46337}" description="Properties: Define un conjunto de Property Set" progid="SIDTLB._ProperySets" threadingModel="Both" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+    <comClass clsid="{83C86171-6227-4FB4-9889-EC0DD241CC51}" description="Properties: Define un Property Set" progid="SIDTLB._PropertySet" threadingModel="Both" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+    <comClass clsid="{E90D1906-BAAE-435E-BC98-110EBAA566DE}" description="Properties: Define una property" progid="SIDTLB._Property" threadingModel="Both" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+    <typelib helpdir="" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}" version="3.0"/>
+  </file>
+  <comInterfaceExternalProxyStub iid="{C7B85672-1F9C-11D1-88C4-0080C83C520E}" name="IErrorObject" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+  <comInterfaceExternalProxyStub iid="{39041F10-2467-11D1-88C6-0080C83C520E}" name="ICollection" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+  <comInterfaceExternalProxyStub iid="{C55C4213-AEAF-4ECC-ACA9-A763932BE8B6}" name="IAttributeSet" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+  <comInterfaceExternalProxyStub iid="{44D5B881-8333-11D4-AD9F-00902794F778}" name="ISession" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+  <comInterfaceExternalProxyStub iid="{44D5B883-8333-11D4-AD9F-00902794F778}" name="IRowset" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+  <comInterfaceExternalProxyStub iid="{CA892960-2496-11D1-88C6-0080C83C520E}" name="IProperty" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+  <comInterfaceExternalProxyStub iid="{CA892961-2496-11D1-88C6-0080C83C520E}" name="IPropertySet" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+  <comInterfaceExternalProxyStub iid="{09395389-F34D-11D1-962F-00C0DFE46337}" name="IPropertyEvents" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+  <comInterfaceExternalProxyStub iid="{0939538E-F34D-11D1-962F-00C0DFE46337}" name="IPropertySets" proxyStubClsid32="{0939538E-F34D-11D1-962F-00C0DFE46337}" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+  <comInterfaceExternalProxyStub iid="{2556A48C-AD49-44F9-A884-2F0F9CD9FB57}" name="IDispPropertySets" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" tlbid="{C0C1DA35-F15F-4373-9CEA-FC2982E0A26C}"/>
+</assembly>

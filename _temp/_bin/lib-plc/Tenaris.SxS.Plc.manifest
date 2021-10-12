@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+  <assemblyIdentity name="Tenaris.SxS.Plc" processorArchitecture="x86" type="win32" version="1.0.0.0"/>
+  <file hashalg="SHA1" name="plc.dll">
+    <comClass clsid="{2496AB92-C6E0-4AFD-A626-AB91933A3051}" description="PLC.Factory: COCLASS Instanciable para obtener acceso a los recursos implementados en este runtime" progid="Plc.Factory" threadingModel="Both" tlbid="{09CA74AF-C02F-4EE2-B84E-9B9781498F0D}"/>
+    <typelib helpdir="" tlbid="{09CA74AF-C02F-4EE2-B84E-9B9781498F0D}" version="1.0"/>
+  </file>
+  <comInterfaceExternalProxyStub iid="{1542D8F7-FF2A-44B2-A264-972B226431DD}" name="IPlcFactory" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" tlbid="{09CA74AF-C02F-4EE2-B84E-9B9781498F0D}"/>
+  <comInterfaceExternalProxyStub iid="{001310FB-C588-48C1-8733-34EC087F4134}" name="IPlcValues" proxyStubClsid32="{001310FB-C588-48C1-8733-34EC087F4134}" tlbid="{09CA74AF-C02F-4EE2-B84E-9B9781498F0D}"/>
+  <comInterfaceExternalProxyStub iid="{C8384433-F578-434D-9471-B21466B745A1}" name="IPlcBuffer" proxyStubClsid32="{C8384433-F578-434D-9471-B21466B745A1}" tlbid="{09CA74AF-C02F-4EE2-B84E-9B9781498F0D}"/>
+  <comInterfaceExternalProxyStub iid="{398BF4A2-D029-454D-9843-1862D51127B9}" name="IPlcDataType" proxyStubClsid32="{398BF4A2-D029-454D-9843-1862D51127B9}" tlbid="{09CA74AF-C02F-4EE2-B84E-9B9781498F0D}"/>
+  <comInterfaceExternalProxyStub iid="{4F393905-ECD8-4F43-8478-7021E3B9DCE3}" name="IPlcLayer" proxyStubClsid32="{4F393905-ECD8-4F43-8478-7021E3B9DCE3}" tlbid="{09CA74AF-C02F-4EE2-B84E-9B9781498F0D}"/>
+</assembly>

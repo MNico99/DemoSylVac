@@ -1,0 +1,595 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tenaris.Library.IKeyManager.Shared</name>
+    </assembly>
+    <members>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.Key">
+            <summary>
+            Key type
+            </summary>
+        </member>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.IKey">
+            <summary>
+            Key public interface
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKey.IdProductionHistory">
+            <summary>
+            Gets IdProductionHistory.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKey.IsMachineProductionActive">
+            <summary>
+            Gets IsMachineProductionActive.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKey.ShiftDate">
+            <summary>
+            Gets ShiftDate. This property considers only the date for current shift
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKey.ShiftNumber">
+            <summary>
+            Gets ShiftNumber.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKey.IdKey">
+            <summary>
+            Gets IdKey.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKey.IdMachine">
+            <summary>
+            Gets IdMachine.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKey.Crew">
+            <summary>
+            Gets crew name.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKey.BeginDateTime">
+            <summary>
+            Gets BeginDateTime.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKey.EndDateTime">
+            <summary>
+            Gets EndDateTime.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKey.Status">
+            <summary>
+            Gets Status.
+            </summary>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.Key.#ctor(System.Int32,System.Boolean,System.Nullable{System.DateTime},System.Nullable{System.Int32},System.Int32,System.Int32,System.String,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},Tenaris.Library.Shared.Status)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tenaris.Library.IKeyManager.Shared.Key"/> class.
+            </summary>
+            <param name="idProductionHistory">
+            Key idProductionHistory
+            </param>
+            <param name="shiftDate">
+            Key shiftDate
+            </param>
+            <param name="shiftNumber">
+            Key shiftNumber
+            </param>
+            <param name="idKey">
+            Key Id
+            </param>
+            <param name="idMachine">
+            Key idMachine
+            </param>
+            <param name="crew">
+            Key crew
+            </param>
+            <param name="beginDateTime">
+            Key beginDateTime
+            </param>
+            <param name="endDateTime">
+            Key endDateTime
+            </param>
+            <param name="status">
+            Key status
+            </param>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.Key.ToString">
+            <summary>
+            Overrides object's ToString()
+            </summary>
+            <returns>
+            String representation for the object
+            </returns>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.Key.Equals(System.Object)">
+            <summary>
+            Overrides object's Equals()
+            </summary>
+            <param name="obj">
+            The object to be compared with.
+            </param>
+            <returns>
+            Comparison result
+            </returns>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.Key.GetHashCode">
+            <summary>
+            Overrides object's GetHashCode()
+            </summary>
+            <returns>
+            HashCode for current object
+            </returns>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Key.IdProductionHistory">
+            <summary>
+            Gets IdProductionHistory.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Key.IsMachineProductionActive">
+            <summary>
+            Gets IsMachineProductionActive.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Key.ShiftDate">
+            <summary>
+            Gets ShiftDate. This property considers only the date for current shift
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Key.ShiftNumber">
+            <summary>
+            Gets ShiftNumber.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Key.IdKey">
+            <summary>
+            Gets IdKey.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Key.IdMachine">
+            <summary>
+            Gets IdMachine.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Key.Crew">
+            <summary>
+            Gets crew name.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Key.BeginDateTime">
+            <summary>
+            Gets BeginDateTime.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Key.EndDateTime">
+            <summary>
+            Gets EndDateTime.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Key.Status">
+            <summary>
+            Gets Status.
+            </summary>
+        </member>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.Stage">
+            <summary>
+            Stage type
+            </summary>
+        </member>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.IStage">
+            <summary>
+            Stage public interface
+            </summary>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.Stage.#ctor(System.Int32,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tenaris.Library.IKeyManager.Shared.Stage"/> class.
+            </summary>
+            <param name="id">
+            Stage id
+            </param>
+            <param name="code">
+            Stage code
+            </param>
+            <param name="name">
+            Stage name
+            </param>
+            <param name="description">
+            Stage description
+            </param>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.Stage.ToString">
+            <summary>
+            Overrides object's ToString()
+            </summary>
+            <returns>
+            String representation for the object
+            </returns>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.Stage.Equals(System.Object)">
+            <summary>
+            Overrides object's Equals()
+            </summary>
+            <param name="obj">
+            Object to be compared with current one
+            </param>
+            <returns>
+            Flag indicating whether both objects are equal
+            </returns>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.Stage.GetHashCode">
+            <summary>
+            Overrides object's GetHashCode()
+            </summary>
+            <returns>
+            HashCode for current object
+            </returns>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Stage.Id">
+            <summary>
+            Gets Id
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Stage.Code">
+            <summary>
+            Gets Code
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Stage.Name">
+            <summary>
+            Gets Name
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.Stage.Description">
+            <summary>
+            Gets Description
+            </summary>
+        </member>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.StageHistory">
+            <summary>
+            Stage history type
+            </summary>
+        </member>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.IStageHistory">
+            <summary>
+            Stage history public interface
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IStageHistory.IdStageHistory">
+            <summary>
+            Gets IdStageHistory
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IStageHistory.IdKey">
+            <summary>
+            Gets IdKey.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IStageHistory.BeginDateTime">
+            <summary>
+            Gets BeginDateTime.
+            </summary>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.StageHistory.#ctor(System.Int32,System.Int32,System.DateTimeOffset,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tenaris.Library.IKeyManager.Shared.StageHistory"/> class.
+            </summary>
+            <param name="idStageHistory">
+            Stage history Id
+            </param>
+            <param name="idKey">
+            Stage history idKey
+            </param>
+            <param name="standardDuration">
+            Stage history standardDuration
+            </param>
+            <param name="beginDateTime">
+            Stage history beginDateTime
+            </param>
+            <param name="id">
+            Stage id
+            </param>
+            <param name="code">
+            Stage code
+            </param>
+            <param name="name">
+            Stage name
+            </param>
+            <param name="description">
+            Stage description
+            </param>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.StageHistory.ToString">
+            <summary>
+            Overrides object's ToString()
+            </summary>
+            <returns>
+            String representation for the object
+            </returns>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.StageHistory.Equals(System.Object)">
+            <summary>
+            Overrides object's Equals()
+            </summary>
+            <param name="obj">
+            Object to be compared with current one
+            </param>
+            <returns>
+            Flag indicating whether both objects are equal
+            </returns>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.StageHistory.GetHashCode">
+            <summary>
+            Overrides object's GetHashCode()
+            </summary>
+            <returns>
+            HashCode for current object
+            </returns>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.StageHistory.IdStageHistory">
+            <summary>
+            Gets IdStageHistory
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.StageHistory.IdKey">
+            <summary>
+            Gets IdKey
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.StageHistory.BeginDateTime">
+            <summary>
+            Gets BeginDateTime
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.StageHistory.Id">
+            <summary>
+            Gets Stage Id
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.StageHistory.Code">
+            <summary>
+            Gets Stage Code
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.StageHistory.Name">
+            <summary>
+            Gets Stage Name
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.StageHistory.Description">
+            <summary>
+            Gets Stage Description
+            </summary>
+        </member>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.KeyType">
+            <summary>
+            Enumeration with all possible key types
+            </summary>
+        </member>
+        <member name="F:Tenaris.Library.IKeyManager.Shared.KeyType.Active">
+            <summary>
+            Active key type
+            </summary>
+        </member>
+        <member name="F:Tenaris.Library.IKeyManager.Shared.KeyType.Future">
+            <summary>
+            Future key type
+            </summary>
+        </member>
+        <member name="F:Tenaris.Library.IKeyManager.Shared.KeyType.NextFuture">
+            <summary>
+            NextFuture key type
+            </summary>
+        </member>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.IKeyMachine">
+            <summary>
+            KeyMachine public interface
+            </summary>
+        </member>
+        <member name="E:Tenaris.Library.IKeyManager.Shared.IKeyMachine.KeyChanged">
+            <summary>
+            Event triggered when a key changes
+            </summary>
+        </member>
+        <member name="E:Tenaris.Library.IKeyManager.Shared.IKeyMachine.StageHistoryChanged">
+            <summary>
+            Event triggered when a stage changes
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKeyMachine.ActiveKey">
+            <summary>
+            Gets ActiveKey.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKeyMachine.FutureKey">
+            <summary>
+            Gets FutureKey.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKeyMachine.Keys">
+            <summary>
+            Gets Keys.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKeyMachine.ActiveStage">
+            <summary>
+            Get active stage history
+            </summary>
+        </member>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.IKeyManager">
+            <summary>
+            KeyManager public interface
+            </summary>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.IKeyManager.GetKey(System.Int32)">
+            <summary>
+            Gets the key corresponding to the given idKey.
+            </summary>
+            <param name="idKey">
+            Id of searched key
+            </param>
+            <returns>
+            Searched key
+            </returns>
+        </member>
+        <member name="E:Tenaris.Library.IKeyManager.Shared.IKeyManager.StageChanged">
+            <summary>
+            Event triggered when active stage for the area changes
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKeyManager.KeyMachines">
+            <summary>
+            Gets KeyMachines.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.IKeyManager.Stage">
+            <summary>
+            Gets active stage for the area.
+            </summary>
+        </member>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.KeyChangedEventArgs">
+            <summary>
+            Event args for key changed event
+            </summary>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.KeyChangedEventArgs.#ctor(Tenaris.Library.IKeyManager.Shared.IKey,Tenaris.Library.IKeyManager.Shared.IKey,Tenaris.Library.IKeyManager.Shared.IKey,Tenaris.Library.IKeyManager.Shared.IKey,System.Collections.Generic.IEnumerable{Tenaris.Library.IKeyManager.Shared.IKey},Tenaris.Library.IKeyManager.Shared.KeyType,System.DateTimeOffset)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tenaris.Library.IKeyManager.Shared.KeyChangedEventArgs"/> class.
+            </summary>
+            <param name="activeKey">
+            The activeKey.
+            </param>
+            <param name="futureKey">
+            The futureKey.
+            </param>
+            <param name="previousActiveKey">
+            The previousActiveKey.
+            </param>
+            <param name="previousFutureKey">
+            The previousFutureKey.
+            </param>
+            <param name="keys">
+            The keys.
+            </param>
+            <param name="keyChangeType">
+            The keyChangeType.
+            </param>
+            <param name="timestamp">
+            The event date time.
+            </param>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.KeyChangedEventArgs.ToString">
+            <summary>
+            Override for ToString()
+            </summary>
+            <returns>
+            The string representation for the class
+            </returns>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.KeyChangedEventArgs.ActiveKey">
+            <summary>
+            Gets the active key for the machine.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.KeyChangedEventArgs.FutureKey">
+            <summary>
+            Gets the future key for the machine.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.KeyChangedEventArgs.PreviousActiveKey">
+            <summary>
+            Gets the previous active key.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.KeyChangedEventArgs.PreviousFutureKey">
+            <summary>
+            Gets the previous future key.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.KeyChangedEventArgs.Keys">
+            <summary>
+            Gets Keys.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.KeyChangedEventArgs.ChangedKeyType">
+            <summary>
+            Gets KeyChangeType.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.KeyChangedEventArgs.Timestamp">
+            <summary>
+            Gets Timestamp.
+            </summary>
+        </member>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.StageChangedEventArgs">
+            <summary>
+            Event args for stage changed event
+            </summary>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.StageChangedEventArgs.#ctor(System.DateTimeOffset,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tenaris.Library.IKeyManager.Shared.StageChangedEventArgs"/> class.
+            </summary>
+            <param name="timestamp">
+            The event date time.
+            </param>
+            <param name="idStage">
+            The id stage.
+            </param>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.StageChangedEventArgs.ToString">
+            <summary>
+            Overrides object's ToString()
+            </summary>
+            <returns>
+            String representation for the object
+            </returns>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.StageChangedEventArgs.Timestamp">
+            <summary>
+            Gets Timestamp.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.StageChangedEventArgs.IdStage">
+            <summary>
+            Gets IdStage.
+            </summary>
+        </member>
+        <member name="T:Tenaris.Library.IKeyManager.Shared.StageHistoryChangedEventArgs">
+            <summary>
+            Event args for stage history changed event
+            </summary>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.StageHistoryChangedEventArgs.#ctor(System.DateTimeOffset,Tenaris.Library.IKeyManager.Shared.IStageHistory)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Tenaris.Library.IKeyManager.Shared.StageChangedEventArgs"/> class.
+            </summary>
+            <param name="timestamp">
+            The event date time.
+            </param>
+            <param name="stageHistory">
+            The stageHistory.
+            </param>
+        </member>
+        <member name="M:Tenaris.Library.IKeyManager.Shared.StageHistoryChangedEventArgs.ToString">
+            <summary>
+            Overrides object's ToString()
+            </summary>
+            <returns>
+            String representation for the object
+            </returns>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.StageHistoryChangedEventArgs.Timestamp">
+            <summary>
+            Gets Timestamp.
+            </summary>
+        </member>
+        <member name="P:Tenaris.Library.IKeyManager.Shared.StageHistoryChangedEventArgs.StageHistory">
+            <summary>
+            Gets StageHistory.
+            </summary>
+        </member>
+    </members>
+</doc>
