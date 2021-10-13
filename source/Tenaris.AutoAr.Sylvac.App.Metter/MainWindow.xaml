@@ -59,8 +59,8 @@
                 <StackPanel Orientation="Horizontal">
                     <Button Margin="0, 0, 3, 0" ui:Image.Source="{x:Static images:Size_22.icon_start}" Content="Start" Command="{Binding StartCommand}" />
                     <Button Margin="0, 0, 3, 0" ui:Image.Source="{x:Static images:Size_22.icon_stop}" Content="Stop" Command="{Binding StopCommand}" />
-                    <!--<Button Margin="0, 0, 3, 0" Content="Start" Command="{Binding StartCommand}" />
-                    <Button Margin="0, 0, 3, 0" Content="Stop" Command="{Binding StopCommand}" />-->
+                    <Button Margin="0, 0, 3, 0"  Content="Upload" />
+                    <Button Margin="0, 0, 3, 0"  Content="Save" />
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
