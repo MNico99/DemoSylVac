@@ -72,6 +72,7 @@
         /// 
         /// </summary>
         public event EventHandler<EventArgs> StopListening;
+           
 
         /// <summary>
         /// 
@@ -134,6 +135,8 @@
         /// 
         /// </summary>
         public bool IsInInspection { get; set; }
+
+      
 
         /// <summary>
         /// 

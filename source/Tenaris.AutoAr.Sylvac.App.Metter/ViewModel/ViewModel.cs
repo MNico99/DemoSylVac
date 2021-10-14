@@ -13,6 +13,8 @@
 
     using Tenaris.AutoAr.Sylvac.Library.Metter.Model;
     using System.ComponentModel;
+    using System.IO;
+    using Microsoft.Win32;
 
     public class ViewModel : NotificationObject, INotifyPropertyChanged
     {
@@ -20,6 +22,8 @@
         private readonly DelegateCommand windowClosing;
         private readonly DelegateCommand startCommand;
         private readonly DelegateCommand stopCommand;
+        private readonly DelegateCommand loadCommand;
+        private readonly DelegateCommand saveCommand;
         private double rejectMax = ViewConfiguration.Settings.RejectMax;
         private double rejectMin = ViewConfiguration.Settings.RejectMin;
 
@@ -80,6 +84,8 @@
             }
         }
 
+        
+
         public ICommand WindowClosing { get { return this.windowClosing; } }
 
         /// <summary>
@@ -91,6 +97,10 @@
         /// 
         /// </summary>
         public ICommand StopCommand { get { return this.stopCommand; } }
+
+        public ICommand LoadCommand { get { return this.loadCommand; } }
+
+        public ICommand SaveCommand { get { return this.saveCommand; } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private bool isListeningMic = false;
@@ -119,6 +129,9 @@
             this.windowClosing = new DelegateCommand(this.DoWindowClosing);
             this.startCommand = new DelegateCommand(this.DoStartAcquisition, this.CanStartAcquisition);
             this.stopCommand = new DelegateCommand(this.DoStopAcquisition, this.CanStopAcquisition);
+            this.loadCommand = new DelegateCommand(this.DoLoadAcquisition);
+            this.saveCommand = new DelegateCommand(this.DoSaveAcquisition, this.CanSaveAcquisition);
+
             //this.isInInspection = false;
 
             Model.Instance.InspectionStarted += new EventHandler<EventArgs>(OnInspectionStarted);
@@ -126,6 +139,40 @@
             Model.Instance.StartListening += new EventHandler<EventArgs>(OnStartListening);
             Model.Instance.StopListening += new EventHandler<EventArgs>(OnStopListening);
             Model.Instance.DataChaned += new EventHandler<DataChangedEventArgs>(OnDataChaned);
+        }
+
+        private void DoSaveAcquisition()
+        {
+            //TODO: Guardar los datos del archivo en la BD
+        }
+
+        private bool CanSaveAcquisition()
+        {
+            return false;
+        }
+        private void DoLoadAcquisition()
+        {
+            Stream checkStream = null;
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+
+            if((bool)openFileDialog.ShowDialog())
+            {
+                try
+                {
+                    if((checkStream = openFileDialog.OpenFile()) != null)
+                    {
+                        //TODO                        
+
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+            }
         }
 
         private void OnStopListening(object sender, EventArgs e)
@@ -213,5 +260,6 @@
         {
             return this.IsInInspection;
         }
+
     }
 }
