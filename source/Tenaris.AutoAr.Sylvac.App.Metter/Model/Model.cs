@@ -7,6 +7,9 @@
     using System.Windows;
     using System.Windows.Threading;
     using Tenaris.Library.Log;
+    using System.Configuration;
+    using System.Data;
+    using System.Data.SqlClient;
 
     public partial class Model
     {
@@ -15,17 +18,58 @@
         private DateTimeOffset startInspectionDateTime = DateTimeOffset.Now;
         private readonly object syncRoot = new object();
 
+        SqlConnection SqlConnection;
+        SqlCommand SqlCommand;
+
+       
         private Model()
         {
             try
             {
+                SqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString);
+                SqlCommand = new SqlCommand();
+                SqlCommand.Connection = SqlConnection;
+                SqlCommand.CommandType = CommandType.StoredProcedure;
                 this.Activate();
+
+                //TODO: Se agrega al inicializar el programa, cambiarlo.
+                this.Add();
+
             }
             catch (Exception ex)
             {
                 Trace.Exception(ex, "Initializing Proxy.");
             }
         }
+
+        private bool Add()
+        {
+            //TODO: Buscar para agregar como lista de valores y desde un archivo.
+            bool IsAdded = false;
+            try
+            {
+                SqlCommand.Parameters.Clear();
+                SqlCommand.CommandText = "ADD_Values";
+                SqlCommand.Parameters.AddWithValue("xCoord", "20");
+                SqlCommand.Parameters.AddWithValue("yCoord", "30.22");
+
+                SqlConnection.Open();
+                int NoOfRowsAffected = SqlCommand.ExecuteNonQuery();
+                IsAdded = NoOfRowsAffected > 0;
+            }
+            catch (SqlException ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                SqlConnection.Close();
+            }
+
+            return IsAdded;
+        }
+
 
         ~Model()
         {
@@ -58,6 +102,8 @@
         /// </summary>
         public event EventHandler<EventArgs> InspectionStopped;
 
+        
+
         /// <summary>
         /// Raised after the inspection ends.
         /// </summary>
@@ -72,7 +118,9 @@
         /// 
         /// </summary>
         public event EventHandler<EventArgs> StopListening;
-           
+
+        
+
 
         /// <summary>
         /// 
@@ -136,7 +184,10 @@
         /// </summary>
         public bool IsInInspection { get; set; }
 
-      
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsLoaded { get; set; }
 
         /// <summary>
         /// 

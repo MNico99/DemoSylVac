@@ -76,6 +76,20 @@
             }
         }
 
+        public bool IsLoaded
+        {
+            get
+            {
+                return Model.Instance.IsLoaded;
+            
+            }
+            set
+            {
+                this.RaisePropertyChanged(() => this.IsLoaded);
+            }
+        }
+
+
         public bool IsListening
         {
             get
@@ -129,7 +143,7 @@
             this.windowClosing = new DelegateCommand(this.DoWindowClosing);
             this.startCommand = new DelegateCommand(this.DoStartAcquisition, this.CanStartAcquisition);
             this.stopCommand = new DelegateCommand(this.DoStopAcquisition, this.CanStopAcquisition);
-            this.loadCommand = new DelegateCommand(this.DoLoadAcquisition);
+            this.loadCommand = new DelegateCommand(this.DoLoadAcquisition, this.CanLoadAcquistion);
             this.saveCommand = new DelegateCommand(this.DoSaveAcquisition, this.CanSaveAcquisition);
 
             //this.isInInspection = false;
@@ -141,6 +155,11 @@
             Model.Instance.DataChaned += new EventHandler<DataChangedEventArgs>(OnDataChaned);
         }
 
+        private bool CanLoadAcquistion()
+        {
+            return !this.IsLoaded;
+        }
+
         private void DoSaveAcquisition()
         {
             //TODO: Guardar los datos del archivo en la BD
@@ -148,7 +167,8 @@
 
         private bool CanSaveAcquisition()
         {
-            return false;
+            //TODO
+            return this.IsLoaded;
         }
         private void DoLoadAcquisition()
         {
@@ -163,8 +183,8 @@
                 {
                     if((checkStream = openFileDialog.OpenFile()) != null)
                     {
-                        //TODO                        
-
+                        //TODO
+                        this.saveCommand.RaiseCanExecuteChanged();
                     }
                 }
                 catch (Exception ex)
