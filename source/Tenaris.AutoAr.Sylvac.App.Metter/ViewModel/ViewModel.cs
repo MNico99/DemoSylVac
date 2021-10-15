@@ -150,9 +150,19 @@
 
             Model.Instance.InspectionStarted += new EventHandler<EventArgs>(OnInspectionStarted);
             Model.Instance.InspectionStopped += new EventHandler<EventArgs>(OnInspectionStopped);
+            Model.Instance.LoadingStopped += new EventHandler<EventArgs>(OnLoadingStopped);
             Model.Instance.StartListening += new EventHandler<EventArgs>(OnStartListening);
             Model.Instance.StopListening += new EventHandler<EventArgs>(OnStopListening);
             Model.Instance.DataChaned += new EventHandler<DataChangedEventArgs>(OnDataChaned);
+        }
+
+        private void OnLoadingStopped(object sender, EventArgs e)
+        {
+            this.IsLoaded = true;
+            this.loadCommand.RaiseCanExecuteChanged();
+            this.saveCommand.RaiseCanExecuteChanged();
+            this.RaisePropertyChanged(() => this.IsLoaded);
+            OnPropertyChanged("IsLoaded");
         }
 
         private bool CanLoadAcquistion()
@@ -163,6 +173,7 @@
         private void DoSaveAcquisition()
         {
             //TODO: Guardar los datos del archivo en la BD
+
         }
 
         private bool CanSaveAcquisition()
@@ -172,27 +183,8 @@
         }
         private void DoLoadAcquisition()
         {
-            Stream checkStream = null;
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect = false;
-            openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-
-            if((bool)openFileDialog.ShowDialog())
-            {
-                try
-                {
-                    if((checkStream = openFileDialog.OpenFile()) != null)
-                    {
-                        //TODO
-                        this.saveCommand.RaiseCanExecuteChanged();
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                    throw;
-                }
-            }
+            Model.Instance.StartLoad();
+            
         }
 
         private void OnStopListening(object sender, EventArgs e)

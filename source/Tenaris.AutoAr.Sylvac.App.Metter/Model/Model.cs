@@ -10,6 +10,8 @@
     using System.Configuration;
     using System.Data;
     using System.Data.SqlClient;
+    using System.IO;
+    using Microsoft.Win32;
 
     public partial class Model
     {
@@ -21,7 +23,7 @@
         SqlConnection SqlConnection;
         SqlCommand SqlCommand;
 
-       
+
         private Model()
         {
             try
@@ -102,6 +104,8 @@
         /// </summary>
         public event EventHandler<EventArgs> InspectionStopped;
 
+        public event EventHandler<EventArgs> LoadingStopped;
+
         
 
         /// <summary>
@@ -144,6 +148,36 @@
                 this.workerThread.Start();
             }
 
+        }
+
+        public void StartLoad()
+        {
+            if(!this.IsLoaded)
+            {
+                Stream checkStream = null;
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Multiselect = false;
+                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+
+                if ((bool)openFileDialog.ShowDialog())
+                {
+                    try
+                    {
+                        if ((checkStream = openFileDialog.OpenFile()) != null)
+                        {
+                            //TODO
+                            this.DoLoadingStopped();
+
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -197,6 +231,19 @@
         protected void DoDataChanged(IEnumerable<MetterValue> items)
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => this.DoUpdateData(items)));
+        }
+
+        protected void DoLoadingStopped()
+        {
+            if(!this.IsLoaded)
+            {
+                this.IsLoaded = true;
+            }
+            if(LoadingStopped != null)
+            {
+                this.LoadingStopped(this, new EventArgs());
+            }
+            
         }
 
         protected void DoInspectionStopped()
