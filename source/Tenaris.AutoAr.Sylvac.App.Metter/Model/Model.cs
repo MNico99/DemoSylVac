@@ -9,9 +9,13 @@
     using Tenaris.Library.Log;
     using System.Configuration;
     using System.Data;
+    using System.Data.OleDb;
     using System.Data.SqlClient;
     using System.IO;
     using Microsoft.Win32;
+    using System.Threading.Tasks;
+    using System.Collections.ObjectModel;
+    using Tenaris.AutoAr.Sylvac.App.Metter.Model;
 
     public partial class Model
     {
@@ -34,9 +38,7 @@
                 SqlCommand.CommandType = CommandType.StoredProcedure;
                 this.Activate();
 
-                //TODO: Se agrega al inicializar el programa, cambiarlo.
-                this.Add();
-
+                
             }
             catch (Exception ex)
             {
@@ -46,14 +48,14 @@
 
         private bool Add()
         {
-            //TODO: Buscar para agregar como lista de valores y desde un archivo.
+            //TODO: Guardar la lista de coordenadas x e y (que se cargaron previamente) en la DB.
             bool IsAdded = false;
             try
             {
                 SqlCommand.Parameters.Clear();
                 SqlCommand.CommandText = "ADD_Values";
                 SqlCommand.Parameters.AddWithValue("xCoord", "20");
-                SqlCommand.Parameters.AddWithValue("yCoord", "30.22");
+                SqlCommand.Parameters.AddWithValue("yCoord", "30.10");
 
                 SqlConnection.Open();
                 int NoOfRowsAffected = SqlCommand.ExecuteNonQuery();
@@ -72,6 +74,23 @@
             return IsAdded;
         }
 
+        private bool LoadValues(string path)
+        {
+            
+            bool IsLoaded = false;
+            ExcelConn excel = new ExcelConn(path, 1);
+
+            excel.LoadValues(); //Obtengo lista de coordenadas
+
+            //TODO: Utilizar esos valores para graficar los puntos.
+
+
+            excel.CloseConn();
+            
+            
+
+            return IsLoaded;
+        }
 
         ~Model()
         {
@@ -157,7 +176,7 @@
                 Stream checkStream = null;
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Multiselect = false;
-                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.Filter = "Excel Files |*.xls;*.xlsx;*.xlsm; |All files (*.*)|*.*";
 
                 if ((bool)openFileDialog.ShowDialog())
                 {
@@ -167,6 +186,8 @@
                         {
                             //TODO
                             this.DoLoadingStopped();
+                            this.LoadValues(openFileDialog.FileName);
+                           
 
 
                         }
