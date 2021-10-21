@@ -8,6 +8,7 @@
     using System.Windows;
     using System.Windows.Threading;
     using Tenaris.Library.Log;
+    using Tenaris.AutoAr.Sylvac.App.Metter.Model;
 
     public partial class Model
     {
@@ -171,6 +172,39 @@
             }
         }
 
-        
+        private void RunLoad()
+        {
+            try
+            {
+                this.DoLoadingStarted();
+
+                ExcelConn excel = new ExcelConn(path, 1);
+
+                var values = excel.LoadValues();
+                excel.CloseConn();
+
+                this.index = 0;
+                while (index != values.Count)
+                {
+                    try
+                    {
+                        var items = new List<MetterValue>();
+                        items.Add(new MetterValue() { Index = values[index].Index, Value = values[index].Value});
+                        this.DoDataChanged(items);
+                        this.index++;
+                        //this.sylvacDevice.Send(string.Format("CHA{0}?#{1}", 1, (char)'\r'));
+                    }
+                    catch (Exception e)
+                    {
+                        Trace.Exception(e, true);
+                    }
+                }
+                //this.DoLoadingStopped();
+            }
+            catch (Exception e)
+            {
+                Trace.Exception(e, true);
+            }
+        }
     }
 }

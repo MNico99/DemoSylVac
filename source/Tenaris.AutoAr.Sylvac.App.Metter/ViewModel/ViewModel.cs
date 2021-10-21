@@ -76,16 +76,16 @@
             }
         }
 
-        public bool IsLoaded
+        public bool IsInLoading
         {
             get
             {
-                return Model.Instance.IsLoaded;
+                return Model.Instance.IsInLoading;
             
             }
             set
             {
-                this.RaisePropertyChanged(() => this.IsLoaded);
+                this.RaisePropertyChanged(() => this.IsInLoading);
             }
         }
 
@@ -150,24 +150,30 @@
 
             Model.Instance.InspectionStarted += new EventHandler<EventArgs>(OnInspectionStarted);
             Model.Instance.InspectionStopped += new EventHandler<EventArgs>(OnInspectionStopped);
+            Model.Instance.LoadingStarted += new EventHandler<EventArgs>(OnLoadingStarted);
             Model.Instance.LoadingStopped += new EventHandler<EventArgs>(OnLoadingStopped);
             Model.Instance.StartListening += new EventHandler<EventArgs>(OnStartListening);
             Model.Instance.StopListening += new EventHandler<EventArgs>(OnStopListening);
             Model.Instance.DataChaned += new EventHandler<DataChangedEventArgs>(OnDataChaned);
         }
 
-        private void OnLoadingStopped(object sender, EventArgs e)
+        private void OnLoadingStarted(object sender, EventArgs e)
         {
-            this.IsLoaded = true;
+            this.IsInLoading = true;
             this.loadCommand.RaiseCanExecuteChanged();
             this.saveCommand.RaiseCanExecuteChanged();
-            this.RaisePropertyChanged(() => this.IsLoaded);
-            OnPropertyChanged("IsLoaded");
+            this.RaisePropertyChanged(() => this.IsInLoading);
+            OnPropertyChanged("IsInLoading");
+        }
+
+        private void OnLoadingStopped(object sender, EventArgs e)
+        {
+            
         }
 
         private bool CanLoadAcquistion()
         {
-            return !this.IsLoaded;
+            return !this.IsInLoading;
         }
 
         private void DoSaveAcquisition()
@@ -179,7 +185,7 @@
         private bool CanSaveAcquisition()
         {
             //TODO
-            return this.IsLoaded;
+            return this.IsInLoading;
         }
         private void DoLoadAcquisition()
         {

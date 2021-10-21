@@ -23,6 +23,7 @@
         private bool isActive = false;
         private DateTimeOffset startInspectionDateTime = DateTimeOffset.Now;
         private readonly object syncRoot = new object();
+        private static string path;
 
         SqlConnection SqlConnection;
         SqlCommand SqlCommand;
@@ -125,7 +126,7 @@
 
         public event EventHandler<EventArgs> LoadingStopped;
 
-        
+        public event EventHandler<EventArgs> LoadingStarted;
 
         /// <summary>
         /// Raised after the inspection ends.
@@ -171,7 +172,8 @@
 
         public void StartLoad()
         {
-            if(!this.IsLoaded)
+            this.Values = new List<MetterValue>();
+            if (!this.IsInLoading)
             {
                 Stream checkStream = null;
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -185,8 +187,11 @@
                         if ((checkStream = openFileDialog.OpenFile()) != null)
                         {
                             //TODO
-                            this.DoLoadingStopped();
-                            this.LoadValues(openFileDialog.FileName);
+                            path = openFileDialog.FileName;
+                            this.terminateEvent.Reset();
+                            this.workerThread = new Thread(this.RunLoad);
+                            this.workerThread.SetApartmentState(ApartmentState.MTA);
+                            this.workerThread.Start();
                            
 
 
@@ -242,7 +247,7 @@
         /// <summary>
         /// 
         /// </summary>
-        public bool IsLoaded { get; set; }
+        public bool IsInLoading { get; set; }
 
         /// <summary>
         /// 
@@ -254,15 +259,16 @@
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => this.DoUpdateData(items)));
         }
 
-        protected void DoLoadingStopped()
+        protected void DoLoadingStarted()
         {
-            if(!this.IsLoaded)
+            if(!this.IsInLoading)
             {
-                this.IsLoaded = true;
+                this.RemoteStart();
+                this.IsInLoading = true;
             }
             if(LoadingStopped != null)
             {
-                this.LoadingStopped(this, new EventArgs());
+                this.LoadingStarted(this, new EventArgs());
             }
             
         }

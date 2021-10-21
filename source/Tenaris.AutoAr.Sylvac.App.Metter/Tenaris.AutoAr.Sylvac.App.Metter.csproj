@@ -132,7 +132,7 @@
     <Compile Include="Device\SerialComDevice.cs" />
     <Compile Include="Device\VeearDevice.cs" />
     <Compile Include="Device\SylvacDevice.cs" />
-    <Compile Include="Model\ExcelValue.cs" />
+    <Compile Include="Model\Excel.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="View\MetterGaugeView.xaml.cs">
       <DependentUpon>MetterGaugeView.xaml</DependentUpon>
