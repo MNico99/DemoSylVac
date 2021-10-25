@@ -171,6 +171,7 @@
 
         private void DoSaveAsAcquisition()
         {
+            Model.Instance.Stop();
             Model.Instance.SaveAs();
         }
 
