@@ -29,8 +29,8 @@
 
         public ObservableCollection<MetterValue> Values
         {
-            get { return Model.Instance.Values == null ? null : new ObservableCollection<MetterValue>(Model.Instance.Values.Where(p => p.Value > this.rejectMin && p.Value < this.rejectMax)); }
-            //get { return Model.Instance.Values == null ? null : new ObservableCollection<MetterValue>(Model.Instance.Values); }
+            //get { return Model.Instance.Values == null ? null : new ObservableCollection<MetterValue>(Model.Instance.Values.Where(p => p.Value > this.rejectMin && p.Value < this.rejectMax)); }
+            get { return Model.Instance.Values == null ? null : new ObservableCollection<MetterValue>(Model.Instance.Values); }
         }
 
         /// <summary>
@@ -48,6 +48,8 @@
         /// </summary>
         public double LastValue { get; private set; }
 
+        public double LastIndex { get; private set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -57,6 +59,7 @@
         /// 
         /// </summary>
         public DateTimeOffset StopDateTime { get; set; }
+        
 
         //private bool isInInspection;
         /// <summary>
@@ -164,11 +167,22 @@
             this.saveCommand.RaiseCanExecuteChanged();
             this.RaisePropertyChanged(() => this.IsInLoading);
             OnPropertyChanged("IsInLoading");
+
         }
+
+
 
         private void OnLoadingStopped(object sender, EventArgs e)
         {
-            
+            this.IsInLoading = false;
+            Model.Instance.IsLoading(false);
+            this.StartDateTime = DateTimeOffset.Now;
+            this.RaisePropertyChanged(() => this.StartDateTime);
+            OnPropertyChanged("StartDateTime");
+            this.startCommand.RaiseCanExecuteChanged();
+            this.stopCommand.RaiseCanExecuteChanged();
+            this.RaisePropertyChanged(() => this.IsInLoading);
+            OnPropertyChanged("IsInLoading");
         }
 
         private bool CanLoadAcquistion()
@@ -178,7 +192,9 @@
 
         private void DoSaveAcquisition()
         {
-            //TODO: Guardar los datos del archivo en la BD
+            //TODO
+            Model.Instance.Stop();
+            Model.Instance.Add();
 
         }
 
@@ -189,7 +205,8 @@
         }
         private void DoLoadAcquisition()
         {
-            Model.Instance.StartLoad();
+            Model.Instance.IsLoading(true);
+            Model.Instance.Start();
             
         }
 
@@ -207,21 +224,44 @@
 
         private void OnDataChaned(object sender, DataChangedEventArgs e)
         {
-            var items = e.Values.Where(p => p.Value > this.rejectMin && p.Value < this.rejectMax);
-            this.ThresholdMax = items.Count() > 0 ? items.Max(p => p.Value) : 0;
-            this.ThresholdMin = items.Count() > 0 ? items.Min(p => p.Value) : 0;
-            var item = items.LastOrDefault();
-            this.LastValue = item == null ? 0 : item.Value;
+            if(IsInLoading)
+            {
+                var items = e.Values.ToList();
+                var item = items.LastOrDefault();
+                this.LastValue = item == null ? 0 : item.Value;
+                this.LastIndex = item == null ? 0 : item.Index;
 
-            this.RaisePropertyChanged(() => this.ThresholdMax);
-            this.RaisePropertyChanged(() => this.ThresholdMin);
-            this.RaisePropertyChanged(() => this.LastValue);
-            this.RaisePropertyChanged(() => this.Values);
+                
+                this.RaisePropertyChanged(() => this.LastValue);
+                this.RaisePropertyChanged(() => this.LastIndex);
+                this.RaisePropertyChanged(() => this.Values);
 
-            OnPropertyChanged("ThresholdMax");
-            OnPropertyChanged("ThresholdMin");
-            OnPropertyChanged("LastValue");
-            OnPropertyChanged("Values");
+                
+                OnPropertyChanged("LastIndex");
+                OnPropertyChanged("LastValue");
+                OnPropertyChanged("Values");
+            }
+            else 
+            {
+                var items = e.Values.Where(p => p.Value > this.rejectMin && p.Value < this.rejectMax);
+                this.ThresholdMax = items.Count() > 0 ? items.Max(p => p.Value) : 0;
+                this.ThresholdMin = items.Count() > 0 ? items.Min(p => p.Value) : 0;
+                var item = items.LastOrDefault();
+                this.LastValue = item == null ? 0 : item.Value;
+
+                this.RaisePropertyChanged(() => this.ThresholdMax);
+                this.RaisePropertyChanged(() => this.ThresholdMin);
+                this.RaisePropertyChanged(() => this.LastValue);
+                this.RaisePropertyChanged(() => this.Values);
+
+                OnPropertyChanged("ThresholdMax");
+                OnPropertyChanged("ThresholdMin");
+                OnPropertyChanged("LastValue");
+                OnPropertyChanged("Values");
+            }
+           
+
+            
 
         }
 

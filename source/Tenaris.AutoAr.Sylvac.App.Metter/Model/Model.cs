@@ -24,6 +24,8 @@
         private DateTimeOffset startInspectionDateTime = DateTimeOffset.Now;
         private readonly object syncRoot = new object();
         private static string path;
+        private bool isLoading = false;
+        public static List<MetterValue> valuesExcel;
 
         SqlConnection SqlConnection;
         SqlCommand SqlCommand;
@@ -47,51 +49,36 @@
             }
         }
 
-        private bool Add()
+        public void Add()
         {
-            //TODO: Guardar la lista de coordenadas x e y (que se cargaron previamente) en la DB.
             bool IsAdded = false;
             try
             {
-                SqlCommand.Parameters.Clear();
-                SqlCommand.CommandText = "ADD_Values";
-                SqlCommand.Parameters.AddWithValue("xCoord", "20");
-                SqlCommand.Parameters.AddWithValue("yCoord", "30.10");
+                index = 0;
+                while(index < valuesExcel.Count())
+                {
+                    SqlCommand.Parameters.Clear();
+                    SqlCommand.CommandText = "ADD_Values";
+                    SqlCommand.Parameters.AddWithValue("xCoord", valuesExcel[index].Value);
+                    SqlCommand.Parameters.AddWithValue("yCoord", valuesExcel[index].Index);
 
-                SqlConnection.Open();
-                int NoOfRowsAffected = SqlCommand.ExecuteNonQuery();
-                IsAdded = NoOfRowsAffected > 0;
+
+                    SqlConnection.Open();
+                    int NoOfRowsAffected = SqlCommand.ExecuteNonQuery();
+                    IsAdded = NoOfRowsAffected > 0;
+                    index++;
+                    SqlConnection.Close();
+                }
+                
             }
             catch (SqlException ex)
             {
 
                 throw ex;
             }
-            finally
-            {
-                SqlConnection.Close();
-            }
-
-            return IsAdded;
+            
         }
 
-        private bool LoadValues(string path)
-        {
-            
-            bool IsLoaded = false;
-            ExcelConn excel = new ExcelConn(path, 1);
-
-            excel.LoadValues(); //Obtengo lista de coordenadas
-
-            //TODO: Utilizar esos valores para graficar los puntos.
-
-
-            excel.CloseConn();
-            
-            
-
-            return IsLoaded;
-        }
 
         ~Model()
         {
@@ -157,7 +144,7 @@
         public void Start()
         {
             this.Values = new List<MetterValue>();
-            if (!this.IsInInspection)
+            if (!this.IsInInspection && isLoading == false )
             {
                 this.sylvacDevice.Open();
                 this.sylvacDevice.DataChanged += new EventHandler<DataChangedEventArgs>(OnSylvacDataReceived);
@@ -167,48 +154,48 @@
                 this.workerThread.SetApartmentState(ApartmentState.MTA);
                 this.workerThread.Start();
             }
-
-        }
-
-        public void StartLoad()
-        {
-            this.Values = new List<MetterValue>();
-            if (!this.IsInLoading)
+            else if(!this.IsInLoading && isLoading == true)
             {
-                Stream checkStream = null;
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Multiselect = false;
-                openFileDialog.Filter = "Excel Files |*.xls;*.xlsx;*.xlsm; |All files (*.*)|*.*";
-
-                if ((bool)openFileDialog.ShowDialog())
+                this.isLoading = true;
+                this.Values = new List<MetterValue>();
+                if (!this.IsInLoading)
                 {
-                    try
+                    Stream checkStream = null;
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Multiselect = false;
+                    openFileDialog.Filter = "Excel Files |*.xls;*.xlsx;*.xlsm; |All files (*.*)|*.*";
+
+                    if ((bool)openFileDialog.ShowDialog())
                     {
-                        if ((checkStream = openFileDialog.OpenFile()) != null)
+                        try
                         {
-                            //TODO
-                            path = openFileDialog.FileName;
-                            this.terminateEvent.Reset();
-                            this.workerThread = new Thread(this.RunLoad);
-                            this.workerThread.SetApartmentState(ApartmentState.MTA);
-                            this.workerThread.Start();
-                           
+                            if ((checkStream = openFileDialog.OpenFile()) != null)
+                            {
+                                //TODO
+                                path = openFileDialog.FileName;
+                                this.terminateEvent.Reset();
+                                this.workerThread = new Thread(this.Run);
+                                this.workerThread.SetApartmentState(ApartmentState.MTA);
+                                this.workerThread.Start();                                
 
-
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
+                        catch (Exception ex)
+                        {
 
-                        throw;
+                            throw;
+                        }
                     }
                 }
             }
         }
 
+
         /// <summary>
         /// 
         /// </summary>
+        /// 
+
         public void Stop()
         {
             if (this.IsInInspection)
@@ -221,9 +208,17 @@
 
                 this.sylvacDevice.Close();
             }
+            if(this.IsInLoading)
+            {
+
+                this.terminateEvent.Set();
+                this.workerThread.Join();
+                this.workerThread = null;
+            }
 
             this.Values = null;
         }
+
 
         /// <summary>
         /// 
@@ -233,6 +228,12 @@
         {
             return isActive;
         }
+
+        public bool IsLoading(bool isLoading)
+        {
+            return this.isLoading = isLoading;
+        }
+
 
         public void Uninitialize()
         {
@@ -271,6 +272,21 @@
                 this.LoadingStarted(this, new EventArgs());
             }
             
+        }
+
+        protected void DoLoadingStopped()
+        {
+            if (LoadingStopped != null)
+            {
+                this.LoadingStopped(this, new EventArgs());
+            }
+
+            if (this.IsInLoading)
+            {
+                this.RemoteStop();
+                this.IsInLoading = false;
+                this.isLoading = false;
+            }
         }
 
         protected void DoInspectionStopped()

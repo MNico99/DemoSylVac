@@ -146,25 +146,66 @@
         {
             try
             {
-                this.DoInspectionStarted();
-                this.index = 0;
-                this.startInspectionDateTime = DateTimeOffset.Now;
-                while (!terminateEvent.WaitOne(readPeriod))
+                if(!isLoading && isLoading == false)
+                {
+                    this.DoInspectionStarted();
+                    this.index = 0;
+                    this.startInspectionDateTime = DateTimeOffset.Now;
+                    while (!terminateEvent.WaitOne(readPeriod))
+                    {
+                        try
+                        {
+                            var items = new List<MetterValue>();
+                            items.Add(new MetterValue() { Date = DateTimeOffset.Now, Index = this.index, Value = demoValues[index % demoValues.Count()] });
+                            this.DoDataChanged(items);
+                            this.index++;
+                            //this.sylvacDevice.Send(string.Format("CHA{0}?#{1}", 1, (char)'\r'));
+                        }
+                        catch (Exception e)
+                        {
+                            Trace.Exception(e, true);
+                        }
+                    }
+                    this.DoInspectionStopped();
+                }
+                else if(isLoading && isLoading == true)
                 {
                     try
                     {
-                        var items = new List<MetterValue>();
-                        items.Add(new MetterValue() { Date = DateTimeOffset.Now, Index = this.index, Value = demoValues[index % demoValues.Count()] });
-                        this.DoDataChanged(items);
-                        this.index++;
-                        //this.sylvacDevice.Send(string.Format("CHA{0}?#{1}", 1, (char)'\r'));
+                        this.DoLoadingStarted();
+
+                        ExcelConn excel = new ExcelConn(path, 1);
+
+                        var values = excel.LoadValues();
+                        excel.CloseConn();
+                        valuesExcel = values;
+
+                        this.startInspectionDateTime = DateTimeOffset.Now;
+
+                        this.index = 0;
+                        while (!terminateEvent.WaitOne(readPeriod))
+                        {
+                            try
+                            {
+                                var items = new List<MetterValue>();
+                                items.Add(new MetterValue() { Date = DateTimeOffset.Now, Index = values[index].Index, Value = values[index].Value });
+                                this.DoDataChanged(items);
+                                this.index++;
+                                //this.sylvacDevice.Send(string.Format("CHA{0}?#{1}", 1, (char)'\r'));
+                            }
+                            catch (Exception e)
+                            {
+                                Trace.Exception(e, true);
+                            }
+                        }
+                        this.DoLoadingStopped();
                     }
                     catch (Exception e)
                     {
                         Trace.Exception(e, true);
                     }
                 }
-                this.DoInspectionStopped();
+                
             }
             catch (Exception e)
             {
@@ -172,39 +213,6 @@
             }
         }
 
-        private void RunLoad()
-        {
-            try
-            {
-                this.DoLoadingStarted();
-
-                ExcelConn excel = new ExcelConn(path, 1);
-
-                var values = excel.LoadValues();
-                excel.CloseConn();
-
-                this.index = 0;
-                while (index != values.Count)
-                {
-                    try
-                    {
-                        var items = new List<MetterValue>();
-                        items.Add(new MetterValue() { Index = values[index].Index, Value = values[index].Value});
-                        this.DoDataChanged(items);
-                        this.index++;
-                        //this.sylvacDevice.Send(string.Format("CHA{0}?#{1}", 1, (char)'\r'));
-                    }
-                    catch (Exception e)
-                    {
-                        Trace.Exception(e, true);
-                    }
-                }
-                //this.DoLoadingStopped();
-            }
-            catch (Exception e)
-            {
-                Trace.Exception(e, true);
-            }
-        }
+       
     }
 }
