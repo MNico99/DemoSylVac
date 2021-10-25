@@ -191,7 +191,6 @@
                                 items.Add(new MetterValue() { Date = DateTimeOffset.Now, Index = values[index].Index, Value = values[index].Value });
                                 this.DoDataChanged(items);
                                 this.index++;
-                                //this.sylvacDevice.Send(string.Format("CHA{0}?#{1}", 1, (char)'\r'));
                             }
                             catch (Exception e)
                             {
@@ -213,6 +212,6 @@
             }
         }
 
-       
+        
     }
 }

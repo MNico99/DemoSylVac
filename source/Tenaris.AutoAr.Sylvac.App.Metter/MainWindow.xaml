@@ -60,7 +60,8 @@
                     <Button Margin="0, 0, 3, 0" ui:Image.Source="{x:Static images:Size_22.icon_start}" Content="Start" Command="{Binding StartCommand}" />
                     <Button Margin="0, 0, 3, 0" ui:Image.Source="{x:Static images:Size_22.icon_stop}" Content="Stop" Command="{Binding StopCommand}" />
                     <Button Margin="0, 0, 3, 0" ui:Image.Source="{x:Static images:Size_22.icon_search}" Content="Upload" Command="{Binding LoadCommand}" />
-                    <Button Margin="0, 0, 3, 0" ui:Image.Source="{x:Static images:Size_22.icon_save}" Content="Save" Command="{Binding SaveCommand}" />
+                    <Button Margin="0, 0, 3, 0" ui:Image.Source="{x:Static images:Size_22.icon_save}" Content="Save DB" Command="{Binding SaveCommand}" />
+                    <Button Margin="0, 0, 3, 0" ui:Image.Source="{x:Static images:Size_22.icon_save}" Content="Save as" Command="{Binding SaveAsCommand}" />
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">

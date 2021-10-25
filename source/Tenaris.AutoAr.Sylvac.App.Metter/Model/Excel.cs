@@ -11,8 +11,12 @@
         string path = "";
         _Application excel = new _Excel.Application();
         Workbook wb;
-        Worksheet ws;
+        Worksheet ws;         
 
+        public ExcelConn()
+        {
+           
+        }
         public ExcelConn(string path, int sheet)
         {
             this.path = path;
@@ -47,9 +51,42 @@
                     Loaded = true;                
 
             }
-
+            
             return Values;
         }
+
+        public void SaveValues(string path, List<MetterValue> valuesExcel)
+        {
+            try
+            {
+                wb = excel.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+                ws = wb.Worksheets[1];
+
+                if (valuesExcel != null)
+                {
+                    ws.Cells[1, 1].Value2 = "X";
+                    ws.Cells[1, 2].Value2 = "Y";
+                    int j = 2;
+                    for (int i = 0; i < valuesExcel.Count; i++)
+                    {
+                        ws.Cells[j, 1].Value2 = valuesExcel[i].Index;
+                        ws.Cells[j, 2].Value2 = valuesExcel[i].Value;
+                        j++;
+                    }
+                    wb.SaveAs(path);
+                }
+            }
+            catch (System.Exception ex)
+            {
+
+                throw ex;
+            }
+            
+            
+        }
+
+
+       
     }
 
 }

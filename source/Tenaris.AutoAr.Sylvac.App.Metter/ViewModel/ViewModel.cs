@@ -24,6 +24,7 @@
         private readonly DelegateCommand stopCommand;
         private readonly DelegateCommand loadCommand;
         private readonly DelegateCommand saveCommand;
+        private readonly DelegateCommand saveAsCommand;
         private double rejectMax = ViewConfiguration.Settings.RejectMax;
         private double rejectMin = ViewConfiguration.Settings.RejectMin;
 
@@ -119,6 +120,8 @@
 
         public ICommand SaveCommand { get { return this.saveCommand; } }
 
+        public ICommand SaveAsCommand { get { return this.saveAsCommand; } }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private bool isListeningMic = false;
 
@@ -148,6 +151,7 @@
             this.stopCommand = new DelegateCommand(this.DoStopAcquisition, this.CanStopAcquisition);
             this.loadCommand = new DelegateCommand(this.DoLoadAcquisition, this.CanLoadAcquistion);
             this.saveCommand = new DelegateCommand(this.DoSaveAcquisition, this.CanSaveAcquisition);
+            this.saveAsCommand = new DelegateCommand(this.DoSaveAsAcquisition, this.CanSaveAsAcquisition);
 
             //this.isInInspection = false;
 
@@ -160,11 +164,22 @@
             Model.Instance.DataChaned += new EventHandler<DataChangedEventArgs>(OnDataChaned);
         }
 
+        private bool CanSaveAsAcquisition()
+        {
+            return this.IsInLoading;
+        }
+
+        private void DoSaveAsAcquisition()
+        {
+            Model.Instance.SaveAs();
+        }
+
         private void OnLoadingStarted(object sender, EventArgs e)
         {
             this.IsInLoading = true;
             this.loadCommand.RaiseCanExecuteChanged();
             this.saveCommand.RaiseCanExecuteChanged();
+            this.saveAsCommand.RaiseCanExecuteChanged();
             this.RaisePropertyChanged(() => this.IsInLoading);
             OnPropertyChanged("IsInLoading");
 
@@ -176,11 +191,9 @@
         {
             this.IsInLoading = false;
             Model.Instance.IsLoading(false);
-            this.StartDateTime = DateTimeOffset.Now;
-            this.RaisePropertyChanged(() => this.StartDateTime);
-            OnPropertyChanged("StartDateTime");
-            this.startCommand.RaiseCanExecuteChanged();
-            this.stopCommand.RaiseCanExecuteChanged();
+            this.loadCommand.RaiseCanExecuteChanged();
+            this.saveCommand.RaiseCanExecuteChanged();
+            this.saveAsCommand.RaiseCanExecuteChanged();
             this.RaisePropertyChanged(() => this.IsInLoading);
             OnPropertyChanged("IsInLoading");
         }
@@ -229,15 +242,15 @@
                 var items = e.Values.ToList();
                 var item = items.LastOrDefault();
                 this.LastValue = item == null ? 0 : item.Value;
-                this.LastIndex = item == null ? 0 : item.Index;
+                //this.LastIndex = item == null ? 0 : item.Index;
 
-                
+
+                //this.RaisePropertyChanged(() => this.LastIndex);
                 this.RaisePropertyChanged(() => this.LastValue);
-                this.RaisePropertyChanged(() => this.LastIndex);
                 this.RaisePropertyChanged(() => this.Values);
 
                 
-                OnPropertyChanged("LastIndex");
+                //OnPropertyChanged("LastIndex");
                 OnPropertyChanged("LastValue");
                 OnPropertyChanged("Values");
             }

@@ -190,6 +190,21 @@
             }
         }
 
+        public void SaveAs()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = "Excel Files";
+            saveFileDialog.DefaultExt = ".xlsx";
+            saveFileDialog.Filter = "Excel Files |*.xls;*.xlsx;*.xlsm; |All files (*.*)|*.*";
+                    
+            if((bool)saveFileDialog.ShowDialog())
+            {
+                path = saveFileDialog.FileName;
+                ExcelConn excel = new ExcelConn();
+                excel.SaveValues(path, valuesExcel);
+                excel.CloseConn();
+            }
+        }
 
         /// <summary>
         /// 
